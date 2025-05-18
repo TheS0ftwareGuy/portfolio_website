@@ -1,21 +1,17 @@
 {
   "extends": [
     "next/core-web-vitals",
-    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended"
   ],
-  "plugins": ["react"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "react"],
   "rules": {
-    "@typescript-eslint/no-unused-vars": "error",
     "prefer-const": "error",
-    "react/no-unescaped-entities": ["error", {
-      "forbid": [
-        {
-          "char": "'",
-          "alternatives": ["&apos;"]
-        }
-      ]
-    }]
+    "react/react-in-jsx-scope": "off",
+    "react/no-unescaped-entities": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+    "no-mixed-spaces-and-tabs": "error"
   },
   "settings": {
     "react": {

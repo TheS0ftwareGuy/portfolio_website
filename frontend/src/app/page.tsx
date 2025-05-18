@@ -85,7 +85,7 @@ export default function HomePage() {
       'Ingeniero de Software',
       'مطوّر برمجيات',
       'Programista oprogramowania',
-	  'Yazılım Geliştirici',
+      'Yazılım Geliştirici',
     ],
     loop: true,
     typeSpeed: 100,
