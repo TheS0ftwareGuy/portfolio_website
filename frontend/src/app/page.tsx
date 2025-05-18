@@ -1,14 +1,14 @@
 // src/app/page.tsx
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import Navbar from './navbar'
 import Image from 'next/image'
-import { FaGithub, FaLinkedin, FaEnvelope, FaUniversity } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
 import { SiTypescript, SiReact, SiNodedotjs, SiTailwindcss, SiJavascript, SiHtml5, SiCss3, SiNextdotjs, SiMongodb, SiPostgresql, SiGit, SiDocker, SiC, SiPython } from 'react-icons/si'
 import { FaJava } from 'react-icons/fa'
 import { useTypewriter, Cursor } from 'react-simple-typewriter'
-import { MdWork, MdSchool, MdComputer, MdContacts, MdPerson, MdHome, MdCode } from 'react-icons/md'; // Icons for section titles
+import { MdWork, MdSchool, MdComputer, MdContacts, MdPerson, MdCode } from 'react-icons/md'
 
 // Profile and project images 
 const PROFILE_IMAGE_URL = '/me.jpeg'; 
@@ -48,7 +48,7 @@ export default function HomePage() {
     const generateMatrixLine = () => {
       const characters = '01';
       const lineLength = Math.floor(Math.random() * 15) + 15; // Random length between 15-30
-      let line = [];
+      const line = [];
       for (let i = 0; i < lineLength; i++) {
         const char = characters.charAt(Math.floor(Math.random() * characters.length));
         line.push(
@@ -199,8 +199,8 @@ export default function HomePage() {
                 <Cursor cursorStyle="_" />
               </div>
               <p className="text-md md:text-lg text-gray-300 mt-4 max-w-xl mx-auto md:mx-0">
-			  I'm a Software Engineering student at the University of Guelph who loves building things that solve real problems. 
-			  I'm currently looking for a Fall 2025 co-op where I can contribute to meaningful, forward-thinking projects.
+                I&apos;m a Software Engineering student at the University of Guelph who loves building things that solve real problems. 
+                I&apos;m currently looking for a Fall 2025 co-op where I can contribute to meaningful, forward-thinking projects.
               </p>
             </div>
 
@@ -246,17 +246,17 @@ export default function HomePage() {
             <div className="grid md:grid-cols-5 gap-10 md:gap-16 items-center">
               <div className="md:col-span-3 space-y-4 text-gray-300 text-lg">
                 <p>
-                	Hi, I'm Adam! 
+                  Hi, I&apos;m Adam! 
                 </p>
                 <p>
-					A Software Engineering student who fell in love early on with the idea that all you need to build something impactful is an idea and a laptop. 
-					To me, tech is a creative playground, and that curiosity led to countless late nights diving into algorithms, building projects, 
-					and trying to solve real problems through code.
+                  A Software Engineering student who fell in love early on with the idea that all you need to build something impactful is an idea and a laptop. 
+                  To me, tech is a creative playground, and that curiosity led to countless late nights diving into algorithms, building projects, 
+                  and trying to solve real problems through code.
                 </p>
                 <p>
-					Outside of tech, I'm always looking for the next adventure. I love traveling, hiking, and meeting people from different cultures. 
-					A fun detail: the word Software Developer on my homepage shifts languages depending on the countries I've visited, 
-					a small nod to the global perspective I bring to everything I do.
+                  Outside of tech, I&apos;m always looking for the next adventure. I love traveling, hiking, and meeting people from different cultures. 
+                  A fun detail: the word Software Developer on my homepage shifts languages depending on the countries I&apos;ve visited, 
+                  a small nod to the global perspective I bring to everything I do.
                 </p>
               </div>
               <div className="md:col-span-2 flex justify-center">
