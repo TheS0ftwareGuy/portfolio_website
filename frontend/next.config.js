@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  output: 'export',
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -9,6 +9,10 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+  },
+  // Disable server components for static export
+  experimental: {
+    appDir: true,
   },
 }
 
