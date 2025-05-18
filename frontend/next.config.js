@@ -10,10 +10,6 @@ const nextConfig = {
       },
     ],
   },
-  // Enable static exports
-  experimental: {
-    isrMemoryCacheSize: 0,
-  },
 }
 
 module.exports = nextConfig 
