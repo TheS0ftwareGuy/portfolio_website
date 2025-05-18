@@ -10,10 +10,9 @@ const nextConfig = {
       },
     ],
   },
-  // Disable server components for static export
-  experimental: {
-    appDir: true,
-  },
+  // Configure static export
+  trailingSlash: true,
+  distDir: '.next'
 }
 
 module.exports = nextConfig 
