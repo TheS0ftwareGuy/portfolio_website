@@ -1,8 +1,25 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "plugins": ["react"],
   "rules": {
     "@typescript-eslint/no-unused-vars": "error",
-    "react/no-unescaped-entities": "off",
-    "prefer-const": "error"
+    "prefer-const": "error",
+    "react/no-unescaped-entities": ["error", {
+      "forbid": [
+        {
+          "char": "'",
+          "alternatives": ["&apos;"]
+        }
+      ]
+    }]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 } 
