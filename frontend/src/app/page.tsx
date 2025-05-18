@@ -5,17 +5,18 @@ import React, { useState, useEffect, useRef } from 'react'
 import Navbar from './navbar'
 import Image from 'next/image'
 import { FaGithub, FaLinkedin, FaEnvelope, FaUniversity } from 'react-icons/fa'
-import { SiTypescript, SiReact, SiNodedotjs, SiTailwindcss, SiJavascript, SiHtml5, SiCss3, SiNextdotjs, SiMongodb, SiPostgresql, SiGit, SiAmazonaws, SiDocker, SiJest, SiStripe, SiOpenstreetmap } from 'react-icons/si' // Added more icons
+import { SiTypescript, SiReact, SiNodedotjs, SiTailwindcss, SiJavascript, SiHtml5, SiCss3, SiNextdotjs, SiMongodb, SiPostgresql, SiGit, SiDocker, SiC, SiPython } from 'react-icons/si'
+import { FaJava } from 'react-icons/fa'
 import { useTypewriter, Cursor } from 'react-simple-typewriter'
 import { MdWork, MdSchool, MdComputer, MdContacts, MdPerson, MdHome, MdCode } from 'react-icons/md'; // Icons for section titles
 
-// Placeholder for profile and project images - replace with your actual image paths
-const PROFILE_IMAGE_URL = '/me.jpeg'; // Replace with your actual image path
-const UNIVERSITY_LOGO_URL = '/university-logo-placeholder.png'; // Replace with your university logo
-const PROJECT_PORTFOLIO_IMG = '/portfolio-project-placeholder.png';
-const PROJECT_ECOMMERCE_IMG = '/ecommerce-project-placeholder.png';
-const PROJECT_WEATHER_IMG = '/weather-app-project-placeholder.png';
-const ABOUT_ME_IMAGE_URL = '/about-me-placeholder.png'; // Replace with an image for your about section
+// Profile and project images 
+const PROFILE_IMAGE_URL = '/me.jpeg'; 
+const UNIVERSITY_LOGO_URL = '/UoG.webp'; 
+const PROJECT_PORTFOLIO_IMG = '/portfolio-project.png';
+const PROJECT_INVESTMENT_IMG = '/investment-project.png';
+const PROJECT_JOB_VACANCIES_IMG = '/job-vacancies-project.png';
+const ABOUT_ME_IMAGE_URL = '/ABOUT_ME_IMAGE.webp';
 
 // Section Title Component
 const SectionTitle = ({ title, icon }: { title: string, icon?: React.ReactNode }) => (
@@ -28,6 +29,15 @@ const SectionTitle = ({ title, icon }: { title: string, icon?: React.ReactNode }
   </div>
 );
 
+interface Project {
+  title: string;
+  description: string;
+  technologies: string[];
+  image: string;
+  github?: string;
+  liveDemo?: string;
+}
+
 export default function HomePage() {
   const [isClient, setIsClient] = useState(false);
   const [matrixRows, setMatrixRows] = useState<React.JSX.Element[]>([]);
@@ -37,13 +47,14 @@ export default function HomePage() {
 
     const generateMatrixLine = () => {
       const characters = '01';
+      const lineLength = Math.floor(Math.random() * 15) + 15; // Random length between 15-30
       let line = [];
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < lineLength; i++) {
         const char = characters.charAt(Math.floor(Math.random() * characters.length));
         line.push(
           <span
             key={i}
-            style={{ '--delay': Math.random() * 10 } as React.CSSProperties}
+            style={{ '--delay': Math.random() * 5 } as React.CSSProperties}
           >
             {char}
           </span>
@@ -52,8 +63,14 @@ export default function HomePage() {
       return line;
     };
 
-    const newRows = Array(50).fill(null).map((_, index) => ( // Increased rows for full page
-      <div key={index} style={{ animationDelay: `${Math.random() * 7}s` }}>
+    const newRows = Array(30).fill(null).map((_, index) => (
+      <div 
+        key={index} 
+        style={{ 
+          '--delay': Math.random() * 20,
+          marginRight: `${Math.random() * 2}rem`
+        } as React.CSSProperties}
+      >
         {generateMatrixLine()}
       </div>
     ));
@@ -63,11 +80,12 @@ export default function HomePage() {
 
   const [text] = useTypewriter({
     words: [
-      'Software Engineer',
+      'Software Developer',
       'Développeur Logiciel',
       'Ingeniero de Software',
-      'ソフトウェアエンジニア',
-      'Full-Stack Developer',
+      'مطوّر برمجيات',
+      'Programista oprogramowania',
+	  'Yazılım Geliştirici',
     ],
     loop: true,
     typeSpeed: 100,
@@ -79,77 +97,89 @@ export default function HomePage() {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const projects = [
+  const projects: Project[] = [
     {
-      title: 'Portfolio Website V2',
+      title: 'Portfolio Website V1',
       description: 'This personal portfolio website, showcasing my skills and projects. Built with Next.js, React, TypeScript, and Tailwind CSS.',
       technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
       image: PROJECT_PORTFOLIO_IMG,
-      github: 'https://github.com/TheS0ftwareGuy/Portfolio-V2',
-      liveDemo: 'https://adam-mohamed.dev', // Example
+      github: 'https://github.com/TheS0ftwareGuy/portfolio_website',
+      liveDemo: 'https://adam-mohamed.dev',
     },
     {
-      title: 'E-commerce Platform (Concept)',
-      description: 'A conceptual full-stack e-commerce application featuring user authentication, product listings, cart functionality, and simulated payment processing.',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Stripe API (simulated)'],
-      image: PROJECT_ECOMMERCE_IMG,
-      github: 'https://github.com/TheS0ftwareGuy/ecommerce-concept',
+      title: 'Investment Portfolio Management',
+      description: 'Developed a Java-based investment portfolio management application featuring dynamic updates, gain calculation, and advanced search using HashMaps, with a Java Swing GUI and file I/O for persistent storage and robust exception handling.',
+      technologies: ['Java', 'Java Swing', 'HashMaps', 'Object-Oriented Programming (OOP)', 'File I/O', 'Exception Handling'],
+      image: PROJECT_INVESTMENT_IMG,
     },
     {
-      title: 'Weather Dashboard',
-      description: 'A responsive, real-time weather application that fetches and displays weather data from the OpenWeatherMap API based on user input.',
-      technologies: ['JavaScript', 'HTML', 'CSS', 'OpenWeatherMap API'],
-      image: PROJECT_WEATHER_IMG,
-      github: 'https://github.com/TheS0ftwareGuy/weather-app',
+      title: 'Job Vacancies Analysis',
+      description: 'Collaborated on a Python-based data analysis project to examine 10,000+ software engineering job vacancies across Canada, performing large-scale data preprocessing and extraction from a 500,000+ record dataset using real-world Statistics Canada data.',
+      technologies: ['Python', 'Pandas', 'Data Preprocessing', 'Data Filtering', 'CSV Handling'],
+      image: PROJECT_JOB_VACANCIES_IMG,
+      github: 'https://github.com/Dcalim/CIS2250_GP',
     },
   ];
 
   const experiences = [
     {
-      title: 'Software Engineering Intern',
-      company: 'Tech Solutions Inc. (Conceptual)',
-      period: 'May 2024 - Present',
-      description: 'Developing and refining front-end components using React and TypeScript. Actively collaborating with senior developers to design and implement new application features and resolve bugs in an Agile environment.',
+      title: 'Python Developer',
+      company: 'Northwestern University',
+      period: 'April 2025 - Present',
+      description: 'Developing ML models for Arabic dialect classification at Northwestern University using a 6,000+ sentence dataset. Focused on NLP preprocessing, feature extraction (BoW, TF-IDF), and training classifiers (Logistic Regression, SVM), with performance benchmarking using precision, recall, and F1-score.',
       icon: <MdWork />,
     },
     {
-      title: 'Web Development Assistant',
-      company: 'University IT Department (Conceptual)',
-      period: 'Sep 2023 - Apr 2024',
-      description: 'Responsible for maintaining and updating various university websites, ensuring responsive design and cross-browser compatibility. Assisted in database management tasks and regular content updates.',
-      icon: <MdComputer />,
+      title: 'Research Assistant',
+      company: 'Nile University',
+      period: 'June 2024 - August 2024',
+      description: 'Built a Proxmox-based virtual cluster with two 16GB RAM nodes, improving resource utilization by ~40% and reducing VM deployment time by 30%. Deployed and tested Ubuntu VMs with dynamic load distribution for more stable performance under concurrent workloads.',
+      icon: <MdSchool />,
     },
     {
-      title: 'Coding Bootcamp Teaching Assistant',
-      company: 'Code Academy (Conceptual)',
-      period: 'Jun 2023 - Aug 2023',
-      description: 'Mentored and guided students through intensive web development projects. Provided constructive code reviews, debugging assistance, and clarified complex programming concepts.',
-      icon: <MdSchool />,
+      title: 'iOS Developer',
+      company: 'OurWaveHub x Apple',
+      period: 'July 2022 - August 2022',
+      description: 'Developed a fitness tracking app in Swift with features for step counting, food logging, and activity monitoring. Improved UI responsiveness by 25% through optimized layout rendering and applied Agile practices to deliver core features within 3 two-week sprints.',
+      icon: <MdComputer />,
     },
   ];
 
   const skills = [
-    { name: 'TypeScript', icon: <SiTypescript className="w-16 h-16 md:w-20 md:h-20" />, level: 'Advanced' },
-    { name: 'React', icon: <SiReact className="w-16 h-16 md:w-20 md:h-20" />, level: 'Advanced' },
-    { name: 'Next.js', icon: <SiNextdotjs className="w-16 h-16 md:w-20 md:h-20" />, level: 'Intermediate' },
-    { name: 'Node.js', icon: <SiNodedotjs className="w-16 h-16 md:w-20 md:h-20" />, level: 'Intermediate' },
-    { name: 'Tailwind CSS', icon: <SiTailwindcss className="w-16 h-16 md:w-20 md:h-20" />, level: 'Advanced' },
-    { name: 'JavaScript (ES6+)', icon: <SiJavascript className="w-16 h-16 md:w-20 md:h-20" />, level: 'Advanced' },
-    { name: 'HTML5', icon: <SiHtml5 className="w-16 h-16 md:w-20 md:h-20" />, level: 'Expert' },
-    { name: 'CSS3', icon: <SiCss3 className="w-16 h-16 md:w-20 md:h-20" />, level: 'Expert' },
-    { name: 'MongoDB', icon: <SiMongodb className="w-16 h-16 md:w-20 md:h-20" />, level: 'Intermediate' },
-    { name: 'PostgreSQL', icon: <SiPostgresql className="w-16 h-16 md:w-20 md:h-20" />, level: 'Beginner' },
-    { name: 'Git & GitHub', icon: <SiGit className="w-16 h-16 md:w-20 md:h-20" />, level: 'Advanced' },
-    { name: 'REST APIs', icon: <MdCode className="w-16 h-16 md:w-20 md:h-20" />, level: 'Intermediate' },
+    { name: 'TypeScript', icon: <SiTypescript className="w-16 h-16 md:w-20 md:h-20" /> },
+    { name: 'React', icon: <SiReact className="w-16 h-16 md:w-20 md:h-20 text-[#61DAFB]" /> },
+    { name: 'Next.js', icon: <SiNextdotjs className="w-16 h-16 md:w-20 md:h-20" /> },
+    { name: 'Node.js', icon: <SiNodedotjs className="w-16 h-16 md:w-20 md:h-20 text-[#339933]" /> },
+    { name: 'Tailwind', icon: <SiTailwindcss className="w-16 h-16 md:w-20 md:h-20 text-[#06B6D4]" /> },
+    { name: 'JavaScript', icon: <SiJavascript className="w-16 h-16 md:w-20 md:h-20 text-[#F7DF1E]" /> },
+    { name: 'Java', icon: <FaJava className="w-16 h-16 md:w-20 md:h-20 text-[#007396]" /> },
+    { name: 'HTML', icon: <SiHtml5 className="w-16 h-16 md:w-20 md:h-20 text-[#E34F26]" /> },
+    { name: 'CSS', icon: <SiCss3 className="w-16 h-16 md:w-20 md:h-20 text-[#1572B6]" /> },
+    { name: 'MongoDB', icon: <SiMongodb className="w-16 h-16 md:w-20 md:h-20 text-[#47A248]" /> },
+    { name: 'SQL', icon: <SiPostgresql className="w-16 h-16 md:w-20 md:h-20 text-[#4169E1]" /> },
+    { name: 'Docker', icon: <SiDocker className="w-16 h-16 md:w-20 md:h-20 text-[#2496ED]" /> },
+    { name: 'C', icon: <SiC className="w-16 h-16 md:w-20 md:h-20 text-[#A8B9CC]" /> },
+    { name: 'Python', icon: <SiPython className="w-16 h-16 md:w-20 md:h-20 text-[#3776AB]" /> },
+    { name: 'Git', icon: <SiGit className="w-16 h-16 md:w-20 md:h-20 text-[#F05032]" /> },
   ];
   
-  const otherSkills = ['Express.js', 'Jest', 'AWS (S3, EC2 basics)', 'Docker (basics)', 'Figma (basics)'];
+  const relatedSkills = [
+    'Machine Learning',
+    'Natural Language Processing',
+    'Text Classification',
+    'Feature Engineering',
+    'Model Evaluation',
+    'ProxMox',
+    'Agile Development',
+    'UI Design',
+    'Product Management'
+  ];
 
 
   return (
     <div className="bg-black text-white min-h-screen relative">
       {isClient && (
-        <div className="matrix fixed inset-0 opacity-20"> {/* Changed to fixed and adjusted opacity */}
+        <div className="matrix fixed inset-0 opacity-30"> {/* Increased opacity for better visibility */}
           {matrixRows}
         </div>
       )}
@@ -169,8 +199,8 @@ export default function HomePage() {
                 <Cursor cursorStyle="_" />
               </div>
               <p className="text-md md:text-lg text-gray-300 mt-4 max-w-xl mx-auto md:mx-0">
-                A passionate Computer Science student and Software Engineer specializing in creating dynamic and responsive web applications.
-                I'm driven by solving complex problems with elegant and efficient solutions. Currently seeking opportunities to contribute to innovative projects.
+			  I'm a Software Engineering student at the University of Guelph who loves building things that solve real problems. 
+			  I'm currently looking for a Fall 2025 co-op where I can contribute to meaningful, forward-thinking projects.
               </p>
             </div>
 
@@ -216,18 +246,22 @@ export default function HomePage() {
             <div className="grid md:grid-cols-5 gap-10 md:gap-16 items-center">
               <div className="md:col-span-3 space-y-4 text-gray-300 text-lg">
                 <p>
-                  Hello! I'm Adam, a Computer Science student deeply fascinated by the art of software development. My journey into technology was sparked by a curiosity for how digital experiences are crafted, leading me to explore everything from web development to complex algorithms.
+                	Hi, I'm Adam! 
                 </p>
                 <p>
-                  I thrive on building modern, responsive, and user-centric web applications, primarily using technologies like React, Next.js, TypeScript, and Node.js. I have a solid foundation in data structures, algorithms, and software design principles, always aiming for clean, efficient, and scalable code.
+					A Software Engineering student who fell in love early on with the idea that all you need to build something impactful is an idea and a laptop. 
+					To me, tech is a creative playground, and that curiosity led to countless late nights diving into algorithms, building projects, 
+					and trying to solve real problems through code.
                 </p>
                 <p>
-                  Beyond coding, I'm an avid learner, constantly exploring new tech trends and tools. I believe in collaborative growth and enjoy contributing to open-source projects. When I'm not at my computer, you might find me strategizing over a chess game or exploring scenic trails.
+					Outside of tech, I'm always looking for the next adventure. I love traveling, hiking, and meeting people from different cultures. 
+					A fun detail: the word Software Developer on my homepage shifts languages depending on the countries I've visited, 
+					a small nod to the global perspective I bring to everything I do.
                 </p>
               </div>
               <div className="md:col-span-2 flex justify-center">
                  <Image
-                    src={ABOUT_ME_IMAGE_URL} // Replace with your actual image
+                    src={ABOUT_ME_IMAGE_URL} 
                     alt="About Adam Mohamed"
                     width={350}
                     height={350}
@@ -252,11 +286,12 @@ export default function HomePage() {
                   className="rounded-md bg-white p-2" // Added bg for visibility if logo is transparent
                 />
                 <div className="text-center sm:text-left">
-                  <h3 className="text-2xl font-semibold text-green-300">Bachelor of Science in Computer Science</h3>
-                  <p className="text-xl text-white">University of Example (UOE)</p>
-                  <p className="text-gray-400 font-mono">Expected Graduation: May 2026</p>
+                  <h3 className="text-2xl font-semibold text-green-300">Bachelor of Computing</h3>
+                  <h4 className="text-xl text-green-300 mt-1">Software Engineering Honours</h4>
+                  <p className="text-xl text-white">University of Guelph (UoG)</p>
+                  <p className="text-gray-400 font-mono">Expected Graduation: May 2028</p>
                   <p className="text-gray-300 mt-3">
-                    <span className="font-semibold text-green-400">Key Courses:</span> Data Structures & Algorithms, Web Application Development, Database Systems, Software Engineering, Operating Systems, Computer Networks.
+                    <span className="font-semibold text-green-400">Key Courses:</span> Data Structures, Analysis of Computer Algorithms, Object-Oriented Programming, Software System Development and Integration, Web Design and Development, Discrete Structures in Computing
                   </p>
                 </div>
               </div>
@@ -330,18 +365,20 @@ export default function HomePage() {
                       </div>
                     </div>
                     <div className="flex space-x-4 mt-auto">
-                      <button
-                        onClick={() => openLink(project.github)}
-                        className="flex items-center gap-x-2 px-4 py-2 text-sm rounded-lg bg-gray-700 text-gray-200 hover:bg-green-500 hover:text-white transition-colors"
-                      >
-                        <FaGithub /> View Code
-                      </button>
+                      {project.github && (
+                        <button
+                          onClick={() => project.github && openLink(project.github)}
+                          className="flex items-center gap-x-2 px-4 py-2 text-sm rounded-lg bg-gray-700 text-gray-200 hover:bg-green-500 hover:text-white transition-colors"
+                        >
+                          <FaGithub /> View Code
+                        </button>
+                      )}
                       {project.liveDemo && (
                          <button
-                           onClick={() => openLink(project.liveDemo)}
+                           onClick={() => project.liveDemo && openLink(project.liveDemo)}
                            className="flex items-center gap-x-2 px-4 py-2 text-sm rounded-lg bg-gray-700 text-gray-200 hover:bg-orange-500 hover:text-white transition-colors"
                          >
-                           <FaEnvelope /> Live Demo {/* Using FaEnvelope as placeholder, change if needed */}
+                           <FaEnvelope /> Live Demo
                          </button>
                        )}
                     </div>
@@ -371,11 +408,11 @@ export default function HomePage() {
                     ))}
                 </div>
                 <div className="mt-16">
-                    <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-center text-green-300">Also Familiar With</h3>
+                    <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-center text-green-300">Related Skills</h3>
                     <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-                        {otherSkills.map((tech, index) => (
+                        {relatedSkills.map((skill: string, index: number) => (
                             <span key={index} className="px-4 py-2 bg-gray-700 text-gray-300 rounded-lg text-sm md:text-md shadow-md">
-                                {tech}
+                                {skill}
                             </span>
                         ))}
                     </div>
@@ -396,10 +433,10 @@ export default function HomePage() {
             <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start max-w-4xl mx-auto">
               <div className="space-y-6">
                 <h3 className="text-2xl font-semibold text-green-300 mb-4 text-center md:text-left">Get in Touch Directly</h3>
-                <a href="mailto:adam.mohamed.dev@gmail.com" className="flex items-center space-x-3 p-4 bg-gray-800/70 border border-gray-700 rounded-lg group hover:bg-gray-700/90 transition-colors">
+                <a href="mailto:adameid.moh@gmail.com" className="flex items-center space-x-3 p-4 bg-gray-800/70 border border-gray-700 rounded-lg group hover:bg-gray-700/90 transition-colors">
                   <FaEnvelope className="text-green-400 text-2xl group-hover:text-green-300" />
                   <span className="text-lg text-white group-hover:text-green-300 transition-colors">
-                    adam.mohamed.dev@gmail.com
+                    adameid.moh@gmail.com
                   </span>
                 </a>
                 <a

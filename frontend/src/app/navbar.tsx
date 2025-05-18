@@ -2,12 +2,13 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import Link from 'next/link' // Using Next.js Link
+import Link from 'next/link'
 import { FaBars, FaTimes } from 'react-icons/fa'
 
 const navLinks = [
   { id: 'home', label: '_hello' },
   { id: 'about', label: '_about-me' },
+  { id: 'education', label: '_education' },
   { id: 'experience', label: '_experience' },
   { id: 'projects', label: '_projects' },
   { id: 'skills', label: '_skills' },
@@ -44,7 +45,6 @@ export default function Navbar() {
   }, []);
 
   const smoothScrollTo = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, id: string) => {
-    // Check if the event target is already a link, if so, prevent default
     if (e.currentTarget.tagName === 'A') {
         e.preventDefault();
     }
@@ -63,10 +63,6 @@ export default function Navbar() {
     }
   };
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
-
   return (
     <nav 
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out
@@ -74,53 +70,80 @@ export default function Navbar() {
     >
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            {/* Updated Link: No legacyBehavior, no child <a> */}
-            <Link 
-              href="#home" 
-              onClick={(e) => smoothScrollTo(e, 'home')}
-              className="text-3xl font-bold"
-            >
-              <span className="text-green-400">Adam</span>
-              <span className="text-orange-400">.dev</span>
-            </Link>
-          </div>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex md:items-center w-full">
+            {/* Left side - Main navigation */}
+            <div className="flex items-center space-x-2 lg:space-x-4">
+              {navLinks.filter(link => link.id !== 'contact').map((link) => (
+                <Link
+                  key={link.id}
+                  href={`#${link.id}`}
+                  onClick={(e) => smoothScrollTo(e, link.id)}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 nav-link
+                              ${activeSection === link.id 
+                                ? 'text-orange-400 border-b-2 border-orange-400' 
+                                : 'text-gray-300 hover:text-green-400 hover:border-b-2 hover:border-green-400'}`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden md:flex md:items-center md:space-x-2 lg:space-x-4">
-            {navLinks.map((link) => (
-              // Updated Link: No legacyBehavior, no child <a>
+            {/* Right side - Contact */}
+            <div className="ml-auto">
               <Link
-                key={link.id}
-                href={`#${link.id}`}
-                onClick={(e) => smoothScrollTo(e, link.id)}
+                href="#contact"
+                onClick={(e) => smoothScrollTo(e, 'contact')}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 nav-link
-                            ${activeSection === link.id 
-                              ? 'text-orange-400 border-b-2 border-orange-400' 
-                              : 'text-gray-300 hover:text-green-400 hover:border-b-2 hover:border-green-400'}`}
+                          ${activeSection === 'contact' 
+                            ? 'text-orange-400 border-b-2 border-orange-400' 
+                            : 'text-gray-300 hover:text-green-400 hover:border-b-2 hover:border-green-400'}`}
               >
-                {link.label}
+                _contact-me
               </Link>
-            ))}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={toggleMobileMenu}
-              type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-400"
-              aria-controls="mobile-menu"
-              aria-expanded={mobileMenuOpen}
-            >
-              <span className="sr-only">Open main menu</span>
-              {mobileMenuOpen ? (
-                <FaTimes className="block h-6 w-6" aria-hidden="true" />
-              ) : (
-                <FaBars className="block h-6 w-6" aria-hidden="true" />
-              )}
-            </button>
+          <div className="md:hidden flex items-center w-full">
+            <div className="flex items-center space-x-2">
+              <Link
+                href="#home"
+                onClick={(e) => smoothScrollTo(e, 'home')}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200
+                          ${activeSection === 'home' 
+                            ? 'text-orange-400' 
+                            : 'text-gray-300 hover:text-green-400'}`}
+              >
+                _hello
+              </Link>
+            </div>
+            <div className="flex items-center space-x-4 ml-auto">
+              <Link
+                href="#contact"
+                onClick={(e) => smoothScrollTo(e, 'contact')}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200
+                          ${activeSection === 'contact' 
+                            ? 'text-orange-400' 
+                            : 'text-gray-300 hover:text-green-400'}`}
+              >
+                _contact-me
+              </Link>
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                type="button"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-400"
+                aria-controls="mobile-menu"
+                aria-expanded={mobileMenuOpen}
+              >
+                <span className="sr-only">Open main menu</span>
+                {mobileMenuOpen ? (
+                  <FaTimes className="block h-6 w-6" aria-hidden="true" />
+                ) : (
+                  <FaBars className="block h-6 w-6" aria-hidden="true" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -129,8 +152,7 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-gray-900/95 shadow-xl backdrop-blur-md" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navLinks.map((link) => (
-              // Updated Link: No legacyBehavior, no child <a>
+            {navLinks.filter(link => link.id !== 'contact').map((link) => (
               <Link
                 key={link.id}
                 href={`#${link.id}`}
