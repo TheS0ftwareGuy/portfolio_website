@@ -1,0 +1,12 @@
+[build]
+command = "cd frontend && npm install && npm run build"
+publish = "frontend/.next"
+
+[build.environment]
+NODE_VERSION = "20"
+NPM_VERSION = "10"
+NEXT_TELEMETRY_DISABLED = "1"
+
+# Enable improved Node.js compatibility
+[build.compatibility_flags]
+nodejs_compat = true 
