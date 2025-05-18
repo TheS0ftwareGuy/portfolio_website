@@ -14,8 +14,8 @@ module.exports = {
 		  accent: 'var(--accent)',
 		},
 		fontFamily: {
-		  sans: ['var(--font-geist-sans)', 'sans-serif'],
-		  mono: ['var(--font-geist-mono)', 'monospace'],
+		  sans: ['Inter', 'sans-serif'],
+		  mono: ['monospace'],
 		},
 		// Add other theme extensions like animation, keyframes, etc.
 		// The matrix animations are currently in globals.css, which is fine.
